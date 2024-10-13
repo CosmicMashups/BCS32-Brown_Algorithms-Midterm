@@ -15,7 +15,7 @@ using namespace std;
 void tower_of_Hanoi(int n, char source, char destination, char buffer, int& move_count) {
     // Base Case: Only 1 package to move
     if (n == 1) {
-        cout << "Move Package 1 from " << source << " to " << destination << endl;
+        cout << "Relocating Package 1..." << "\nMoving it from " << source << " to " << destination << "\n" <<endl;
         // Increment: Add 1 to the value of move_count
         move_count++;
         // End the function by using return
@@ -26,7 +26,8 @@ void tower_of_Hanoi(int n, char source, char destination, char buffer, int& move
     tower_of_Hanoi(n - 1, source, buffer, destination, move_count);
 
     // Move the nth package from source to destination
-    cout << "Move Package " << n << " from " << source << " to " << destination << endl;
+    cout << "Relocating Package " << n << "..." << "\nMoving it from " << source << " to " << destination << "\n" <<endl;
+    // cout << "Move Package " << n << " from " << source << " to " << destination << endl;
     // Increment: Add 1 to the value of move_count
     move_count++;
 
@@ -47,14 +48,15 @@ int main() {
     cout << "========== TOWER OF HANOI ==========" << endl;
     cout << "The Tower of Hanoi is a classic mathematical puzzle that consists of three rods and a number of\ndisks of different sizes that can slide onto any rod. The puzzle starts with the disks stacked in\nascending order of size on one rod, with the smallest disk on top." << endl;
     
-    // Input: Number of packagescout << "Please specify the total number of packages: ";
+    // Input: Number of packages
+    cout << "Please specify the total number of packages: ";
     cin >> N;
 
     // Function Call: Tower of Hanoi Algorithm
     tower_of_Hanoi(N, 'A', 'C', 'B', move_count);
 
     // Print: Total number of moves
-    cout << "Total number of moves required: " << move_count << endl;
+    cout << "Overall number of moves needed: " << move_count << endl;
 
     return 0;
 }

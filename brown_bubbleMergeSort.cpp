@@ -3,39 +3,41 @@
     BCS32
     Algorithms and Complexity
     Midterm Examination
- */
+*/
 
 // Importing libraries
 #include <iostream>
 #include <vector>
 #include <chrono>
 #include <algorithm>
+#include <cstdlib>
+#include <ctime> 
 
 // For readability purposes
 using namespace std;
 
 /* FUNCTIONS */
 // Function: Merge Sort
-void merge_sort(vector<int> &arr, int left, int right) {
+void merge_sort(vector<int> &arr, size_t left, size_t right) {
     if (left < right) {
-        int mid = left + (right - left) / 2;
+        size_t mid = left + (right - left) / 2;
 
         // Recursively sort first and second halves
         merge_sort(arr, left, mid);
         merge_sort(arr, mid + 1, right);
 
         // Merging two sorted subarrays
-        int n1 = mid - left + 1;
-        int n2 = right - mid;
+        size_t n1 = mid - left + 1;
+        size_t n2 = right - mid;
 
         vector<int> L(n1), R(n2);
 
-        for (int i = 0; i < n1; ++i)
+        for (size_t i = 0; i < n1; ++i)
             L[i] = arr[left + i];
-        for (int j = 0; j < n2; ++j)
+        for (size_t j = 0; j < n2; ++j)
             R[j] = arr[mid + 1 + j];
 
-        int i = 0, j = 0, k = left;
+        size_t i = 0, j = 0, k = left;
         while (i < n1 && j < n2) {
             if (L[i] <= R[j]) {
                 arr[k++] = L[i++];
@@ -56,9 +58,9 @@ void merge_sort(vector<int> &arr, int left, int right) {
 
 // Function: Bubble Sort
 void bubble_sort(vector<int> &arr) {
-    int n = arr.size();
-    for (int i = 0; i < n - 1; ++i) {
-        for (int j = 0; j < n - i - 1; ++j) {
+    size_t n = arr.size();
+    for (size_t i = 0; i < n - 1; ++i) {
+        for (size_t j = 0; j < n - i - 1; ++j) {
             if (arr[j] > arr[j + 1]) {
                 std::swap(arr[j], arr[j + 1]);
             }
@@ -68,7 +70,7 @@ void bubble_sort(vector<int> &arr) {
 
 // Function: Print an Array
 void print_array(const vector<int> &arr) {
-    for (int time : arr) {
+    for (const int time : arr) {
         cout << time << " ";
     }
     cout << endl;
@@ -100,7 +102,7 @@ void analysis(vector<int> delivery_times) {
     cout << "Time Complexity: O(n^2)\n";
 
     // Merge Sort
-    cout << "MERGE SORT" << endl;
+    cout << "\nMERGE SORT" << endl;
     cout << "Sorted delivery times: ";
     print_array(mergeSortedTimes);
     cout << "Time taken: " << mergeDuration.count() << " seconds\n";
@@ -111,8 +113,13 @@ void analysis(vector<int> delivery_times) {
 int main() {
     /*  Variable Instantiation
         N: Number of deliveries
+        time: Generate random delivery times
      */
-    int N; // Number of deliveries
+    size_t N; // Number of deliveries
+    srand(static_cast<unsigned int>(time(0))); // Seed for random number generation
+
+    // Display: Description
+    cout << "========== BUBBLE VS. MERGE SORT ==========" << endl;
 
     // Input: Number of deliveries
     cout << "Enter the number of deliveries: ";
@@ -123,14 +130,20 @@ int main() {
         cout << "Please enter a positive number for the number of deliveries: ";
         cin >> N;
     }
+    
+    // Variable: delivery_times
+    vector<int> delivery_times(N); // Array: Different delivery times
 
-    // Input: Delivery times
-    vector<int> delivery_times(N);
-    cout << "Enter the delivery times (in minutes)." << endl;
-    for (int i = 0; i < N; ++i) {
-        cout << "Delivery Time (" << i + 1 << "): ";
-        cin >> delivery_times[i];
+    // Loop: Add random numbers to the delivery_times array
+    for (size_t i = 0; i < N; ++i) {
+        // Generate number between 1 and the value of 360
+        delivery_times[i] = rand() % 360 + 1; 
     }
+
+    // Output the generated delivery times
+    cout << "Delivery Times: ";
+    print_array(delivery_times);
+    cout << endl;
 
     // Function Call: Analyze sorting algorithms
     analysis(delivery_times);
